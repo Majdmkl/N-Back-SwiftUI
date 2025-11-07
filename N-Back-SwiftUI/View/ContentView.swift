@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  N-Back-SwiftUI
 //
-//  Created by Jonas Willén on 2023-09-19.
+//  Created by Majid Makhoul on 2025-11-07.
 //
 
 import SwiftUI
@@ -30,37 +30,54 @@ extension View {
 }
 
 struct ContentView: View {
-    @EnvironmentObject var theViewModel : N_Back_SwiftUIVM
-    @State private var orientation = UIDeviceOrientation.portrait
-    
+    @EnvironmentObject var vm: N_Back_SwiftUIVM
+
     var body: some View {
-        VStack() {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            
-            Text("High-Score \(theViewModel.highScore)")
-            Spacer()
-            Button {
-                theViewModel.newHighScoreValue()
-            } label: {
-                Text("Generate eventValue")
-                    .font(.title)
+        NavigationStack {
+            VStack(spacing: 16) {
+                Image(systemName: "globe")
+                    .imageScale(.large)
+                    .foregroundColor(.accentColor)
+
+                Text("High-Score: \(vm.highScore)")
+                    .font(.title2)
+
+                // Show base-settings in homescreen
+                Text("Settings: chosen mode • n=\(vm.n) • intervall=\(String(format: "%.1f", vm.interval))s • events=\(vm.totalEvents)")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+
+                Spacer()
+
+                Text("Choose game mode").font(.title3)
+
+                HStack(spacing: 24) {
+                    NavigationLink {
+                        GameView(mode: .visual)
+                    } label: {
+                        ImageIconView() // Existing button component
+                    }
+
+                    NavigationLink {
+                        GameView(mode: .audio)
+                    } label: {
+                        SoundIconView() // Existing button component
+                    }
+                }
+
+                Spacer()
             }
             .padding()
-            Spacer()
-            ActionIconView()
-            
         }
-        .padding()
     }
+
 }
 
 
 
-
-
-struct ContentView_Previews:     {
+struct ContentView_Previews:  PreviewProvider {
     static var previews: some View {
         Group{
             ForEach(["iPhone SE (3rd generation)", "iPhone 14 Pro Max"], id: \.self) { deviceName in

@@ -13,19 +13,19 @@ struct ActionIconView: View {
         VStack(alignment: .center) {
             Text("START GAME").font(.largeTitle)
             HStack(spacing: 30){
-                Button {
-                    theViewModel.soundClick()
-                } label: {
-                    SoundIconView()
-                }
-                Button {
-                    theViewModel.imageClick()
+                NavigationLink{
+                    GameView(mode: .visual)
                 } label: {
                     ImageIconView()
                 }
+                NavigationLink {
+                    GameView(mode: .audio)
+                } label: {
+                    SoundIconView()
+                }
             }
-            
         }
+        .padding()
     }
 }
 
