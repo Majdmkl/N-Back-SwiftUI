@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,7 +18,6 @@
 		EBD8C0EC2AB9909200DC99B8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD8C0EB2AB9909200DC99B8 /* ContentView.swift */; };
 		EBD8C0EE2AB9909300DC99B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBD8C0ED2AB9909300DC99B8 /* Assets.xcassets */; };
 		EBD8C0F12AB9909400DC99B8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBD8C0F02AB9909400DC99B8 /* Preview Assets.xcassets */; };
-		EBD8C0F82AB9974600DC99B8 /* N_Back_SwiftUIVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD8C0F72AB9974600DC99B8 /* N_Back_SwiftUIVM.swift */; };
 		EBD8C0FA2AB997EC00DC99B8 /* N_Back_SwiftUIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD8C0F92AB997EC00DC99B8 /* N_Back_SwiftUIModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,9 +36,12 @@
 		EBD8C0EB2AB9909200DC99B8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EBD8C0ED2AB9909300DC99B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EBD8C0F02AB9909400DC99B8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		EBD8C0F72AB9974600DC99B8 /* N_Back_SwiftUIVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N_Back_SwiftUIVM.swift; sourceTree = "<group>"; };
 		EBD8C0F92AB997EC00DC99B8 /* N_Back_SwiftUIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = N_Back_SwiftUIModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		35CDFCFB2EC50377009F0A7C /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		EBD8C0E32AB9909200DC99B8 /* Frameworks */ = {
@@ -82,10 +84,10 @@
 		EBD8C0E82AB9909200DC99B8 /* N-Back-SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				35CDFCFB2EC50377009F0A7C /* ViewModel */,
 				EBA7C6CF2ACB059900585AF6 /* Model */,
 				EBD8C0FF2AB9BEEC00DC99B8 /* View */,
 				EBD8C0E92AB9909200DC99B8 /* N_Back_SwiftUIApp.swift */,
-				EBD8C0F72AB9974600DC99B8 /* N_Back_SwiftUIVM.swift */,
 				EBD8C0ED2AB9909300DC99B8 /* Assets.xcassets */,
 				EBD8C0EF2AB9909400DC99B8 /* Preview Content */,
 			);
@@ -128,6 +130,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				35CDFCFB2EC50377009F0A7C /* ViewModel */,
 			);
 			name = "N-Back-SwiftUI";
 			productName = "N-Back-SwiftUI";
@@ -192,7 +197,6 @@
 				351ABA542EBE55F200983478 /* GameView.swift in Sources */,
 				EBA7C6D42ACB0C1800585AF6 /* nback.c in Sources */,
 				351ABA562EBEA40700983478 /* DualGameView.swift in Sources */,
-				EBD8C0F82AB9974600DC99B8 /* N_Back_SwiftUIVM.swift in Sources */,
 				EBD8C0EA2AB9909200DC99B8 /* N_Back_SwiftUIApp.swift in Sources */,
 				EBA7C6E02ACC0F2700585AF6 /* ActionIconView.swift in Sources */,
 				351ABA582EBEAA1C00983478 /* SettingsView.swift in Sources */,
