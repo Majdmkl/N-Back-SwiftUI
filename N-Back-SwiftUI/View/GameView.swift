@@ -11,7 +11,9 @@ struct GameView: View {
     let mode: N_Back_SwiftUIVM.Mode
     @EnvironmentObject var vm: N_Back_SwiftUIVM
 
-    private let cols = Array(repeating: GridItem(.flexible(), spacing: 8), count: 3)
+    private var columns: [GridItem] {
+        Array(repeating: GridItem(.flexible(), spacing: 8), count: vm.gridSize)
+    }
 
     var body: some View {
         VStack(spacing: 20) {
@@ -24,8 +26,8 @@ struct GameView: View {
 
             // Stimulus
             if mode == .visual {
-                LazyVGrid(columns: cols, spacing: 8) {
-                    ForEach(1...9, id: \.self) { i in
+                LazyVGrid(columns: columns, spacing: 8) {
+                    ForEach(1...(vm.gridSize * vm.gridSize), id: \.self) { i in
                         RoundedRectangle(cornerRadius: 12)
                             .frame(height: 80)
                             .foregroundStyle(vm.activeGridPos == i ? .blue : .gray.opacity(0.2))

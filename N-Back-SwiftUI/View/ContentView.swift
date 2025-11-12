@@ -38,41 +38,53 @@ struct ContentView: View {
                 Image(systemName: "globe")
                     .imageScale(.large)
                     .foregroundColor(.accentColor)
-
+                
                 Text("High-Score: \(vm.highScore)")
                     .font(.title2)
-
+                
                 // Show base-settings in homescreen
                 Text("Settings: chosen mode • n=\(vm.n) • intervall=\(String(format: "%.1f", vm.interval))s • events=\(vm.totalEvents)")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
-
+                
                 Spacer()
-
-                Text("Choose game mode").font(.title3)
-
+                
+                Text("Choose game mode").font(.headline).padding(.top,8)
+                
                 HStack(spacing: 24) {
                     NavigationLink {
                         GameView(mode: .visual)
                     } label: {
                         ImageIconView() // Existing button component
                     }
-
                     NavigationLink {
                         GameView(mode: .audio)
                     } label: {
                         SoundIconView() // Existing button component
                     }
                 }
-
-                Spacer()
+                
+                NavigationLink {
+                    DualGameView()
+                } label: {
+                    Label("Dual", systemImage: "rectangle.3.group.bubble.left.fill").padding().foregroundColor(.white).background(Color.blue).cornerRadius(45).shadow(radius: 4)
+                }
+            Spacer()
+        }
+        .padding()
+        .navigationTitle("N-Back Game")
+        .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink(destination: SettingsView()) {
+                        Image(systemName: "gear")
+                    }
+                }
             }
-            .padding()
         }
     }
-
 }
 
 
