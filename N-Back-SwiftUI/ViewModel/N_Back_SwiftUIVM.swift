@@ -57,6 +57,7 @@ class N_Back_SwiftUIVM : ObservableObject  {
         scheduleTimer()
     }
     
+    // Updates timer highscore and empties boxes
     func stopGame() {
         timer?.invalidate()
         timer = nil
@@ -70,6 +71,7 @@ class N_Back_SwiftUIVM : ObservableObject  {
         isDual = false
     }
 
+    //Single-mode
     func userSaysMatch() {
         let idx = eventIndex - 1 // use last shown
         guard idx - n >= 0 else { flashError(); return }
@@ -92,7 +94,7 @@ class N_Back_SwiftUIVM : ObservableObject  {
           guard eventIndex < totalEvents else { stopGame(); return }
 
             if isDual {
-                // Dual: shows box
+                // Dual: shows box, indipendent of audio
                 let v = sequenceVisual[eventIndex]
                 activeGridPos = v
                 
@@ -137,13 +139,13 @@ class N_Back_SwiftUIVM : ObservableObject  {
         wrongGuess = false
         isRunning = true
     
-        // Visuall sequence (boxes)
+        // Visual sequence (boxes)
         let visualCombinations = gridSize * gridSize
         model.newRound(size: totalEvents,
                        combinations: visualCombinations,
                        matchPercentage: 20,
                        nback: n)
-        sequenceVisual = model.current   // Save visuall sequence
+        sequenceVisual = model.current   // Save visual sequence
 
         // Audio, depenetend on visual
            sequenceAudio = generateSequence(size: totalEvents, combinations: letters.count, matchPercentage: 20, nback: n)
@@ -171,6 +173,8 @@ class N_Back_SwiftUIVM : ObservableObject  {
         scheduleTimer()
     }
     
+    
+    // Dual-mode
     func userSaysMatchVisual(){
         let idx = eventIndex - 1
         guard idx - n >= 0 else {flashError(); return}
@@ -181,6 +185,7 @@ class N_Back_SwiftUIVM : ObservableObject  {
         }
     }
     
+    // Dual-mode
     func userSaysMatchAudio(){
         let idx = eventIndex - 1
         guard idx - n >= 0 else {flashError(); return}

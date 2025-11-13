@@ -48,7 +48,7 @@ struct DualGameView: View {
                  }
                  .font(.subheadline)
 
-            // Buttons
+                // Buttons
                    HStack(spacing: 20) {
                        Button("Box match") {
                            vm.userSaysMatchVisual()

@@ -13,12 +13,14 @@ struct N_BackSwiftUIModel {
 
     mutating func newRound(size: Int, combinations: Int, matchPercentage: Int, nback: Int) {
         current.removeAll() // Clear old results
+        // Create, generates sequence of stimulis, ex. [4,1,2,1,4..]
         let s = create(Int32(size), Int32(combinations), Int32(matchPercentage), Int32(nback))
         for i in 0..<size {
             current.append(Int(getIndexOf(s, Int32(i))))
         }
     }
 
+    // Updates highscore 
     mutating func finishRound(correct: Int) {
         highScore = max(highScore, correct)
     }
