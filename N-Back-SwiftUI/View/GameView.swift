@@ -49,13 +49,12 @@ struct GameView: View {
             Button("Match!") {
                 vm.userSaysMatch()
             }
-            .buttonStyle(.borderedProminent)
+            .padding()
             .background(vm.wrongGuess ? Color.red : Color.blue)
             .cornerRadius(8)
             .foregroundColor(.white)
             .scaleEffect(vm.wrongGuess ? 1.2 : 1.0)
             .animation(.easeInOut(duration: 0.3), value: vm.wrongGuess)
-            
 
             HStack {
                 Button("Stop") { vm.stopGame() }

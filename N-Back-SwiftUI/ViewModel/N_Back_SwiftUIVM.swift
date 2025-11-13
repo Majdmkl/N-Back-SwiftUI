@@ -16,14 +16,12 @@ class N_Back_SwiftUIVM : ObservableObject  {
     @AppStorage("n") var n : Int = 2
     @AppStorage("totalEvents") var totalEvents: Int = 20
     @AppStorage("interval") var interval: Double = 1.5
-    // för 5x5 senare
-    @AppStorage("gridSize") var gridSize: Int = 3
+    @AppStorage("gridSize") var gridSize: Int = 3 // For 5x5 later
     @AppStorage("lettersCount") var lettersCount: Int = 12
+    
     @Published var correctVisual = 0
     @Published var correctAudio = 0
-    
-    //Results
-    @Published var highScore: Int = 0
+    @Published var highScore: Int = 0 // Results
     @Published var eventIndex: Int = 0
     @Published var correct: Int = 0
     @Published var activeGridPos: Int? = nil
@@ -44,7 +42,6 @@ class N_Back_SwiftUIVM : ObservableObject  {
     let synthesizer = AVSpeechSynthesizer()
     private var model = N_BackSwiftUIModel()
     
-    //Controllers
     func startGame(mode: Mode) {
         isDual = false
         self.mode = mode
@@ -95,15 +92,16 @@ class N_Back_SwiftUIVM : ObservableObject  {
           guard eventIndex < totalEvents else { stopGame(); return }
 
             if isDual {
-                // Dual: shows box + letter
+                // Dual: shows box
                 let v = sequenceVisual[eventIndex]
                 activeGridPos = v
-
+                
+                // Play sound
                 let a = sequenceAudio[eventIndex]
                 let letter = String(letters[(a - 1) % letters.count])
                 speech(aString: letter)
               } else {
-                  // Single: Visual or Audio
+                  // Single: Visual OR Audio
                   let value = sequence[eventIndex]
                   if mode == .visual {
                       activeGridPos = value
@@ -132,23 +130,44 @@ class N_Back_SwiftUIVM : ObservableObject  {
     func startDual(){
         //show and play sound at the same time
         isDual = true
-        mode = .visual
+        mode = .visual // Show boxes + sounds in dual
         eventIndex = 0
         correctVisual = 0
         correctAudio = 0
         wrongGuess = false
         isRunning = true
     
-        // 9 combinations from 3x3
-        model.newRound(size: totalEvents, combinations: gridSize * gridSize, matchPercentage: 20, nback: n)
+        // Visuall sequence (boxes)
+        let visualCombinations = gridSize * gridSize
+        model.newRound(size: totalEvents,
+                       combinations: visualCombinations,
+                       matchPercentage: 20,
+                       nback: n)
+        sequenceVisual = model.current   // Save visuall sequence
+
+        // Audio, depenetend on visual
+           sequenceAudio = generateSequence(size: totalEvents, combinations: letters.count, matchPercentage: 20, nback: n)
         
-        sequenceVisual = model.current
-        
-        // Audio = number of characters
-        model.newRound(size: totalEvents, combinations: letters.count, matchPercentage: 20, nback: n)
-        
-        sequenceAudio = model.current
-        
+        //Make the sound matches less depentent of visual
+        if totalEvents > n {
+            for i in n..<totalEvents {
+                let visualMatch = sequenceVisual[i] == sequenceVisual[i - n]
+                let audioMatch  = sequenceAudio[i] == sequenceAudio[i - n]
+
+                // If both match on same event:
+                if visualMatch && audioMatch {
+                    // About half of the time we change the matching rate
+                    if Bool.random() {
+                        var newVal = sequenceAudio[i]
+                        // choose a new letter other than N-Back match
+                        while newVal == sequenceAudio[i - n] {
+                            newVal = Int.random(in: 1...letters.count)
+                        }
+                        sequenceAudio[i] = newVal
+                    }
+                }
+            }
+        }
         scheduleTimer()
     }
     
@@ -171,6 +190,33 @@ class N_Back_SwiftUIVM : ObservableObject  {
             flashError()
         }
     }
+    
+    //New generator for Audio sequence
+    private func generateSequence(size: Int, combinations: Int, matchPercentage: Int, nback: Int) -> [Int] {
+        var result: [Int] = []
+        let matchProb = Double(matchPercentage) / 100.0
+
+        for i in 0..<size {
+            if i < nback {
+                // First n value can not be an N-Back match, randomly generate
+                result.append(Int.random(in: 1...combinations))
+            } else {
+                if Double.random(in: 0...1) < matchProb {
+                    // Force an N-Back match
+                    result.append(result[i - nback])
+                } else {
+                    // Use another value than N-Back value
+                    var candidate: Int
+                    repeat {
+                        candidate = Int.random(in: 1...combinations)
+                    } while candidate == result[i - nback]
+                    result.append(candidate)
+                }
+            }
+        }
+        return result
+    }
+
 }
 
 

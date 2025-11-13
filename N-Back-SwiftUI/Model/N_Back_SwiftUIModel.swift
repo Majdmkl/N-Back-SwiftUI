@@ -12,7 +12,7 @@ struct N_BackSwiftUIModel {
     private(set) var current: [Int] = []
 
     mutating func newRound(size: Int, combinations: Int, matchPercentage: Int, nback: Int) {
-        current.removeAll()
+        current.removeAll() // Clear old results
         let s = create(Int32(size), Int32(combinations), Int32(matchPercentage), Int32(nback))
         for i in 0..<size {
             current.append(Int(getIndexOf(s, Int32(i))))

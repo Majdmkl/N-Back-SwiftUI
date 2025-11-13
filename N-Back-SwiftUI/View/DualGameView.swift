@@ -34,13 +34,13 @@ struct DualGameView: View {
             }
             .padding(.horizontal)
             
-            // Audio ikon
+            // Audio Icon
                  VStack(spacing: 6) {
                      Image(systemName: "speaker.wave.3.fill").font(.system(size: 36))
                      Text("Listen…").opacity(0.6)
                  }.padding(.top, 4)
 
-                 // Poäng
+                 // Points
                  HStack {
                      Text("Picture: \(vm.correctVisual)")
                      Spacer()
@@ -48,7 +48,7 @@ struct DualGameView: View {
                  }
                  .font(.subheadline)
 
-            // Knappar bredvid varandra
+            // Buttons
                    HStack(spacing: 20) {
                        Button("Box match") {
                            vm.userSaysMatchVisual()
