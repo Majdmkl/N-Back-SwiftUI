@@ -207,12 +207,13 @@ class N_Back_SwiftUIVM : ObservableObject  {
                 result.append(Int.random(in: 1...combinations))
             } else {
                 if Double.random(in: 0...1) < matchProb {
-                    // Force an N-Back match
+                    // Force an N-Back match, if prob ex > 0.2
                     result.append(result[i - nback])
                 } else {
                     // Use another value than N-Back value
                     var candidate: Int
                     repeat {
+                        // Keep shuffling until no match, then store value
                         candidate = Int.random(in: 1...combinations)
                     } while candidate == result[i - nback]
                     result.append(candidate)
