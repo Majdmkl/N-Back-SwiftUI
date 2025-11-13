@@ -154,7 +154,7 @@ class N_Back_SwiftUIVM : ObservableObject  {
     
     func userSaysMatchVisual(){
         let idx = eventIndex - 1
-        guard idx - n >= 0 else {return}
+        guard idx - n >= 0 else {flashError(); return}
         if sequenceVisual[idx] == sequenceVisual[idx - n]{
             correctVisual += 1
         }else{
@@ -164,7 +164,7 @@ class N_Back_SwiftUIVM : ObservableObject  {
     
     func userSaysMatchAudio(){
         let idx = eventIndex - 1
-        guard idx - n >= 0 else {return}
+        guard idx - n >= 0 else {flashError(); return}
         if sequenceAudio[idx] == sequenceAudio[idx - n]{
             correctAudio += 1
         }else{

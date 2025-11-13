@@ -48,21 +48,39 @@ struct DualGameView: View {
                  }
                  .font(.subheadline)
 
-                 // Knappar
-                 HStack(spacing: 16) {
-                     Button("Box match!") { vm.userSaysMatchVisual() }
-                         .buttonStyle(.borderedProminent)
-                     Button("Voice match!") { vm.userSaysMatchAudio() }
-                         .buttonStyle(.borderedProminent)
-                 }
-                 .scaleEffect(vm.wrongGuess ? 0.95 : 1.0)
-                 .animation(.spring(response: 0.25, dampingFraction: 0.6), value: vm.wrongGuess)
+            // Knappar bredvid varandra
+                   HStack(spacing: 20) {
+                       Button("Box match") {
+                           vm.userSaysMatchVisual()
+                       }
+                       .padding(.horizontal, 16)
+                       .padding(.vertical, 8)
+                       .background(vm.wrongGuess ? Color.red : Color.blue)
+                       .cornerRadius(8)
+                       .foregroundColor(.white)
+                       .scaleEffect(vm.wrongGuess ? 1.2 : 1.0)
+                       .animation(.easeInOut(duration: 0.3), value: vm.wrongGuess)
 
-                 Button("Stop") { vm.stopGame() }.padding(.top, 8)
-
+                       Button("Voice match") {
+                           vm.userSaysMatchAudio()
+                       }
+                       .padding(.horizontal, 16)
+                       .padding(.vertical, 8)
+                       .background(vm.wrongGuess ? Color.red : Color.blue)
+                       .cornerRadius(8)
+                       .foregroundColor(.white)
+                       .scaleEffect(vm.wrongGuess ? 1.2 : 1.0)
+                       .animation(.easeInOut(duration: 0.3), value: vm.wrongGuess)
+                   }
+            Button("Stop") {
+                    vm.stopGame()
+                }
+                .padding(.top, 12)
+                .foregroundColor(.blue)
+            
                  Spacer(minLength: 0)
              }
-             .padding()
+        .padding(.horizontal)
              .onAppear { vm.startDual() }
              .onDisappear { vm.stopGame() }
     }

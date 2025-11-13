@@ -45,11 +45,17 @@ struct GameView: View {
                 Spacer()
             }
 
-            // User controll
-            Button("Match!") { vm.userSaysMatch() }
-                .buttonStyle(.borderedProminent)
-                .scaleEffect(vm.wrongGuess ? 0.9 : 1.0) // mild feedback vid fel
-                .animation(.spring(response: 0.25, dampingFraction: 0.5), value: vm.wrongGuess)
+            // User controll + feedback
+            Button("Match!") {
+                vm.userSaysMatch()
+            }
+            .buttonStyle(.borderedProminent)
+            .background(vm.wrongGuess ? Color.red : Color.blue)
+            .cornerRadius(8)
+            .foregroundColor(.white)
+            .scaleEffect(vm.wrongGuess ? 1.2 : 1.0)
+            .animation(.easeInOut(duration: 0.3), value: vm.wrongGuess)
+            
 
             HStack {
                 Button("Stop") { vm.stopGame() }
@@ -59,5 +65,6 @@ struct GameView: View {
         .padding()
         .navigationBarTitleDisplayMode(.inline)
         .onAppear { vm.startGame(mode: mode) }
+        .onDisappear { vm.stopGame() }
     }
 }
