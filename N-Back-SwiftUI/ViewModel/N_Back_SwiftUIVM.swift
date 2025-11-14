@@ -21,7 +21,7 @@ class N_Back_SwiftUIVM : ObservableObject  {
     
     @Published var correctVisual = 0
     @Published var correctAudio = 0
-    @Published var highScore: Int = 0 // Results
+    @Published var highScore: Int = UserDefaults.standard.integer(forKey: "highScoreKey")
     @Published var eventIndex: Int = 0
     @Published var correct: Int = 0
     @Published var activeGridPos: Int? = nil
@@ -65,8 +65,14 @@ class N_Back_SwiftUIVM : ObservableObject  {
         
         let lastScore = isDual ? (correctVisual + correctAudio) : correct
         model.finishRound(correct: lastScore)
-        highScore = max(highScore, model.highScore)
-        
+        let newScore = correct
+
+        // Uppdatera bara om det är nytt rekord
+        if newScore > highScore {
+            highScore = newScore
+            UserDefaults.standard.set(newScore, forKey: "highScoreKey")
+        }
+
         activeGridPos = nil
         isDual = false
     }
